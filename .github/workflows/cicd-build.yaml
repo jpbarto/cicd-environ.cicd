@@ -15,8 +15,9 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - run: |
-        echo GitHub event object is...
-        echo ${{ toJson(github) }}
+      - name: Dump the github object
+        run: |
+          echo GitHub event object is...
+          echo ${{ toJson(github) }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
