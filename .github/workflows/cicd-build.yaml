@@ -1,5 +1,5 @@
 name: CICD Build Pipeline
-run-name: CICD Build invoked by ${{ github.actor }}
+run-name: CICD Build invoked for ${{ github.client_payload.repository }}
 
 on:
   repository_dispatch:
