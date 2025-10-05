@@ -9,25 +9,35 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v5
-        with:
-          repository: ${{ github.event.client_payload.repository }}
-          ref: ${{ github.event.client_payload.sha }}
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: ls
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - name: Print workflow metadata
         run: |
-          ls ${{ github.workspace }}
-      - name: Dump the github object
+          echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+          echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Display the github object
         run: |
           echo GitHub event object is...
           cat <<EOF
           ${{ toJSON(github) }}
           EOF
+
+      - name: Check out repository code
+        uses: actions/checkout@v5
+        with:
+          repository: ${{ github.event.client_payload.repository }}
+          ref: ${{ github.event.client_payload.sha }}
+
+      - name: List directory contents
+        run: tree
+      - name: List the environment
+        run: env
+
+      - name: Perform build
+        run: make cicd-build
+
+      - name: Perform unit tests
+        run: make cicd-unit-test
+
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
