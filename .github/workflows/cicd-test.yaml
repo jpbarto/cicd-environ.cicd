@@ -3,7 +3,7 @@ run-name: CICD Build invoked for ${{ github.event.client_payload.repository }}
 
 on:
   repository_dispatch:
-    types: [trigger-cicd-build]
+    types: [trigger-cicd-test]
 
 jobs:
   Explore-GitHub-Actions:
@@ -33,15 +33,12 @@ jobs:
       - name: List the environment
         run: env
 
-      - name: Perform build
-        run: make cicd_build
-
-      - name: Perform unit tests
-        run: make cicd_unit_test
+      - name: Perform iat
+        run: make cicd_test
 
       - name: Deliver snapshot
         if: ${{ github.event.client_payload.deliver }} == 'true'
-        run: make cicd_deliver_snapshot
+        run: make cicd_deliver_release
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
