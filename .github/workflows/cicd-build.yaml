@@ -18,6 +18,6 @@ jobs:
       - name: Dump the github object
         run: |
           echo GitHub event object is...
-          echo ${{ toJson(github) }}
+          echo ${{ toJSON(github) }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
