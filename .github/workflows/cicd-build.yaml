@@ -34,10 +34,10 @@ jobs:
         run: env
 
       - name: Perform build
-        run: make cicd-build
+        run: make cicd_build
 
       - name: Perform unit tests
-        run: make cicd-unit-test
+        run: make cicd_unit_test
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
