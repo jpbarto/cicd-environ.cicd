@@ -10,6 +10,10 @@ on:
       pow-value:
         required: true
         type: number
+    outputs:
+      pow-result:
+        description: "The value of 2 to the power of pow-value"
+        value: ${{ jobs.calc_pow.outputs.result }}
 
 jobs:
   Explore-GitHub-Actions:
@@ -52,3 +56,11 @@ jobs:
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
+  pow-result:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.calc_result.outputs.pow_result }}
+    steps:
+      - id: calc_result
+        run: |
+          echo "pow_result=$(( 2**${{ inputs.pow-value }} ))" >> $GITHUB_OUTPUT
