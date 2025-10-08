@@ -56,7 +56,7 @@ jobs:
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
-  pow-result:
+  calc_pow:
     runs-on: ubuntu-latest
     outputs:
       result: ${{ steps.calc_result.outputs.pow_result }}
