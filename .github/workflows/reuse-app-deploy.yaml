@@ -1,0 +1,63 @@
+name: CICD Application Deployment Pipeline
+run-name: CICD App Deploy invoked for # ${{ github.event.client_payload.repository }}
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        required: true
+        type: string
+      tf_vars:
+        required: true
+        type: string
+      helm_values:
+        required: true
+        type: string
+      env_name:
+        required: true
+        type: string
+#     outputs:
+#       pow-result:
+#         description: "The value of 2 to the power of pow-value"
+#         value: ${{ jobs.calc_pow.outputs.result }}
+
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print workflow metadata
+        run: |
+          echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+          echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+          echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+          echo "Will deliver a snapshot: ${{ inputs.deliver_snapshot }}"
+
+      - name: Display the github object
+        run: |
+          echo GitHub event object is...
+          cat <<EOF
+          ${{ toJSON(github) }}
+          EOF
+
+      - name: Check out repository code
+        uses: actions/checkout@v5
+#        with:
+#          repository: ${{ github.event.client_payload.repository }}
+#          ref: ${{ github.event.client_payload.sha }}
+
+      - name: List directory contents
+        run: tree
+      - name: List the environment
+        run: env
+
+#      - name: Perform build
+#        run: make cicd_build
+
+#      - name: Perform unit tests
+#        run: make cicd_unit_test
+
+#      - name: Deliver snapshot
+#        if: ${{ github.event.client_payload.deliver }} == 'true'
+#        run: make cicd_deliver_snapshot
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
