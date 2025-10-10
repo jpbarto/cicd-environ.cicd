@@ -68,14 +68,26 @@ jobs:
       - name: Setup OpenTofu
         uses: opentofu/setup-opentofu@v1
 
+      - name: Setup AWS CLI
+        uses: ankurk91/install-aws-cli-action@v1
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+
+      - name: Verify AWS CLI
+        run: |
+          aws --version
+          aws sts get-caller-identity
+
       - name: Deploy the application
         working-directory: application
         env:
-          TF_CLI_ARGS_plan: "-var-file=${PWD}/environment/${{ inputs.tf_vars }}"
-          TF_CLI_ARGS_apply: "-var-file=${PWD}/environment/${{ inputs.tf_vars }}"
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          TF_CLI_ARGS_plan: "-var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }}"
+          TF_CLI_ARGS_apply: "-var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }}"
         run: |
           make cicd_deploy
 
