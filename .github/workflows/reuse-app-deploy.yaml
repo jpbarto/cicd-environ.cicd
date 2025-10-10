@@ -68,6 +68,9 @@ jobs:
       - name: List the environment
         run: env
 
+      - name: Setup OpenTofu
+        uses: opentofu/setup-opentofu@v1
+
       - name: Deploy the application
         working-directory: application
         run: |
