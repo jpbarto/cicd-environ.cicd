@@ -71,6 +71,6 @@ jobs:
       - name: Deploy the application
         working-directory: application
         run: |
-          make cicd-deploy
+          make cicd_deploy
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
