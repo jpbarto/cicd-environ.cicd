@@ -1,10 +1,13 @@
 name: CICD Application Deployment Pipeline
-run-name: CICD App Deploy invoked for # ${{ inputs.repository }}
+run-name: CICD App Deploy invoked for ${{ inputs.repository }}
 
 on:
   workflow_call:
     inputs:
       repository:
+        required: true
+        type: string
+      release:
         required: true
         type: string
       tf_vars:
@@ -43,6 +46,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           repository: ${{ inputs.repository }}
+          ref: ${{ inputs.release }}
 
       - name: List directory contents
         run: tree
