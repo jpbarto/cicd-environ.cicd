@@ -41,9 +41,8 @@ jobs:
 
       - name: Check out repository code
         uses: actions/checkout@v5
-#        with:
-#          repository: ${{ github.event.client_payload.repository }}
-#          ref: ${{ github.event.client_payload.sha }}
+        with:
+          repository: ${{ inputs.repository }}
 
       - name: List directory contents
         run: tree
