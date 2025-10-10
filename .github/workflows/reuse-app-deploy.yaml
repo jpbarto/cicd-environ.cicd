@@ -1,5 +1,5 @@
 name: CICD Application Deployment Pipeline
-run-name: CICD App Deploy invoked for # ${{ github.event.client_payload.repository }}
+run-name: CICD App Deploy invoked for # ${{ inputs.repository }}
 
 on:
   workflow_call:
@@ -30,7 +30,7 @@ jobs:
           echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
           echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
           echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-          echo "Will deliver a snapshot: ${{ inputs.deliver_snapshot }}"
+          echo "Run deploy for ${{ inputs.repository }}"
 
       - name: Display the github object
         run: |
