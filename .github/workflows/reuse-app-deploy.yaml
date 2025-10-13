@@ -16,7 +16,7 @@ on:
       helm_values:
         required: true
         type: string
-      env_name:
+      environment_name:
         required: true
         type: string
       application_name:
@@ -47,7 +47,7 @@ jobs:
           echo "Run deploy for ${{ inputs.repository }} @ ${{ inputs.release }}"
           echo "Using TFVars file ${{ inputs.tf_vars }}"
           echo "using Helm values file ${{ inputs.helm_values }}"
-          echo "For the ${{ inputs.env_name }} environment"
+          echo "For the ${{ inputs.environment_name }} environment"
 
       - name: Display the github object
         run: |
