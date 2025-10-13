@@ -97,15 +97,15 @@ jobs:
       - name: Prepare TF State bucket if not exist
         continue-on-error: true
         run: |
-          aws s3 mb s3://tofu-state-prod-AB12CF --region us-east-2
+          aws s3 mb s3://cicd-environ-tofu-state-prod-AB12CF --region us-east-2
 
       - name: Deploy the application
         working-directory: application
         env:
-          TF_BACKEND_BUCKET: "tofu-state-prod-AB12CF"
+          TF_BACKEND_BUCKET: "cicd-environ-tofu-state-prod-AB12CF"
           TF_BACKEND_KEY: "${{ inputs.environment_name }}/${{ inputs.application_name }}/terraform.tfstate"
           TF_BACKEND_REGION: "us-east-2"
-          TF_CLI_ARGS_init: "-backend-config='use_lockfile=true' -backend-config='bucket=tofu-state-prod-AB12CF' -backend-config='key=${{ inputs.environment_name }}/${{ inputs.application_name }}/terraform.tfstate' -backend-config='region=us-east-2'"
+          TF_CLI_ARGS_init: "-backend-config='use_lockfile=true' -backend-config='bucket=cicd-environ-tofu-state-prod-AB12CF' -backend-config='key=${{ inputs.environment_name }}/${{ inputs.application_name }}/terraform.tfstate' -backend-config='region=us-east-2'"
           TF_CLI_ARGS_plan: "-var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }}"
           TF_CLI_ARGS_apply: "-var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }}"
         run: |
