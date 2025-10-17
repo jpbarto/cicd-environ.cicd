@@ -36,7 +36,7 @@ on:
 #         value: ${{ jobs.calc_pow.outputs.result }}
 
 jobs:
-  Explore-GitHub-Actions:
+  Deploy-Application:
     runs-on: ubuntu-latest
     steps:
       - name: Print workflow metadata
@@ -107,6 +107,7 @@ jobs:
       - name: Deploy the application
         working-directory: application
         env:
+          TF_LOG: "DEBUG"
           TF_BACKEND_BUCKET: "cicd-environ-tofu-state-prod-ab12cf"
           TF_BACKEND_KEY: "${{ inputs.environment_name }}/${{ inputs.application_name }}/terraform.tfstate"
           TF_BACKEND_REGION: "us-east-2"
