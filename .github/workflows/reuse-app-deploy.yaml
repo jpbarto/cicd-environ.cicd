@@ -115,8 +115,8 @@ jobs:
         env:
           TF_LOG: "DEBUG"
           TF_CLI_ARGS_init: "-var='cicd_environment_name=${{ inputs.environment_name }}' -var='cicd_application_name=${{ inputs.application_name }}'"
-          TF_CLI_ARGS_plan: "-var-file=${{ github.workspace }}/environment/environment.tfvars -var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }}"
-          TF_CLI_ARGS_apply: "-var-file=${{ github.workspace }}/environment/environment.tfvars -var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }}"
+          TF_CLI_ARGS_plan: "-var-file=${{ github.workspace }}/environment/environment.tfvars -var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }} -var='cicd_environment_name=${{ inputs.environment_name }}' -var='cicd_application_name=${{ inputs.application_name }}'"
+          TF_CLI_ARGS_apply: "-var-file=${{ github.workspace }}/environment/environment.tfvars -var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }} -var='cicd_environment_name=${{ inputs.environment_name }}' -var='cicd_application_name=${{ inputs.application_name }}'"
         run: |
           make cicd_deploy
 
