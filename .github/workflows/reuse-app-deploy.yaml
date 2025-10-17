@@ -97,11 +97,11 @@ jobs:
       - name: Prepare TF State bucket if not exist
         continue-on-error: true
         run: |
-          aws s3 mb s3://cicd-environ-tofu-state-prod-ab12cf --region us-east-2
+          aws s3 mb s3://cicd-environ-tofu-state-prod-ab12cr --region us-east-2
 
       - name: Confirm TF State bucket existence
         run: |
-          aws s3 ls 's3://cicd-environ-tofu-state-prod-ab12cf' --region us-east-2
+          aws s3 ls 's3://cicd-environ-tofu-state-prod-ab12cr' --region us-east-2
 
       - name: Configure OpenTofu backend
         run: |
