@@ -107,7 +107,7 @@ jobs:
         run: |
           APP_TF_DIR=`find . -type d -exec sh -c '[ -f "$0"/main.tf ]' '{}' \; -print -quit`
           echo Copying TF Backend config to ${APP_TF_DIR}
-          cp environment/terraform/backend.tf $APP_TF_DIR/cicd_backend.tf
+          cp environment/environment-backend.tf $APP_TF_DIR/cicd_backend.tf
           ls $APP_TF_DIR
 
       - name: Deploy the application
