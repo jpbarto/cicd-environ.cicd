@@ -99,18 +99,21 @@ jobs:
         run: |
           aws s3 mb s3://cicd-environ-tofu-state-prod-ab12cf --region us-east-2
 
+      - name: Confirm TF State bucket existence
+        run: |
+          aws s3 ls 's3://cicd-environ-tofu-state-prod-ab12cf' --region us-east-2
+
       - name: Configure OpenTofu backend
         run: |
           APP_TF_DIR=`find . -type d -exec sh -c '[ -f "$0"/main.tf ]' '{}' \; -print -quit`
+          echo Copying TF Backend config to ${APP_TF_DIR}
           cp environment/terraform/backend.tf $APP_TF_DIR/cicd_backend.tf
+          ls $APP_TF_DIR
 
       - name: Deploy the application
         working-directory: application
         env:
           TF_LOG: "DEBUG"
-          TF_BACKEND_BUCKET: "cicd-environ-tofu-state-prod-ab12cf"
-          TF_BACKEND_KEY: "${{ inputs.environment_name }}/${{ inputs.application_name }}/terraform.tfstate"
-          TF_BACKEND_REGION: "us-east-2"
           TF_CLI_ARGS_init: "-var='cicd_environment_name=${{ inputs.environment_name }}' -var='cicd_application_name=${{ inputs.application_name }}'"
           TF_CLI_ARGS_plan: "-var-file=${{ github.workspace }}/environment/environment.tfvars -var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }}"
           TF_CLI_ARGS_apply: "-var-file=${{ github.workspace }}/environment/environment.tfvars -var-file=${{ github.workspace }}/environment/${{ inputs.tf_vars }}"
