@@ -7,16 +7,9 @@ on:
       deliver_snapshot:
         required: true
         type: boolean
-      pow-value:
-        required: true
-        type: number
-    outputs:
-      pow-result:
-        description: "The value of 2 to the power of pow-value"
-        value: ${{ jobs.calc_pow.outputs.result }}
 
 jobs:
-  Explore-GitHub-Actions:
+  perform-build:
     runs-on: ubuntu-latest
     steps:
       - name: Print workflow metadata
@@ -35,32 +28,20 @@ jobs:
 
       - name: Check out repository code
         uses: actions/checkout@v5
-#        with:
-#          repository: ${{ github.event.client_payload.repository }}
-#          ref: ${{ github.event.client_payload.sha }}
 
       - name: List directory contents
         run: tree
       - name: List the environment
         run: env
 
-#      - name: Perform build
-#        run: make cicd_build
+     - name: Perform build
+       run: make cicd_build
 
-#      - name: Perform unit tests
-#        run: make cicd_unit_test
+     - name: Perform unit tests
+       run: make cicd_unit_test
 
 #      - name: Deliver snapshot
 #        if: ${{ github.event.client_payload.deliver }} == 'true'
 #        run: make cicd_deliver_snapshot
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
-
-  calc_pow:
-    runs-on: ubuntu-latest
-    outputs:
-      result: ${{ steps.calc_result.outputs.pow_result }}
-    steps:
-      - id: calc_result
-        run: |
-          echo "pow_result=$(( 2**${{ inputs.pow-value }} ))" >> $GITHUB_OUTPUT
