@@ -34,11 +34,11 @@ jobs:
       - name: List the environment
         run: env
 
-     - name: Perform build
-       run: make cicd_build
+      - name: Perform build
+        run: make cicd_build
 
-     - name: Perform unit tests
-       run: make cicd_unit_test
+      - name: Perform unit tests
+        run: make cicd_unit_test
 
 #      - name: Deliver snapshot
 #        if: ${{ github.event.client_payload.deliver }} == 'true'
