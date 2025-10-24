@@ -8,6 +8,10 @@ on:
         required: true
         type: boolean
 
+env:
+  GH_ACTOR: ${{ github.actor }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 jobs:
   perform-build:
     runs-on: ubuntu-latest
