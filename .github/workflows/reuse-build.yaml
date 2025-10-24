@@ -40,8 +40,8 @@ jobs:
       - name: Perform unit tests
         run: make cicd_unit_test
 
-#      - name: Deliver snapshot
-#        if: ${{ github.event.client_payload.deliver }} == 'true'
-#        run: make cicd_deliver_snapshot
+      - name: Deliver snapshot
+        if: ${{ github.event.client_payload.deliver }} == 'true'
+        run: make cicd_deliver_snapshot
 
       - run: echo "🍏 This job's status is ${{ job.status }}."
